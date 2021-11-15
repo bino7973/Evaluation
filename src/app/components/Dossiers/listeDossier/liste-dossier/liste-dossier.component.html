@@ -1,0 +1,59 @@
+<!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12 mx-auto">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><a class="btn btn-success" (click)="redirigerAjoutDossier()">Ajouter un nouveau dossier</a></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>Numéro</th>
+                    <th>Unité administrative</th>
+                    <th>Responsable</th>
+                    <th>Référence</th>
+                    <th>Intitulé</th>
+                    <th>Objet</th>
+                    <th>Statut</th>
+                    <th>Date de création</th>
+                    <th>Date de clôture</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let dossier of listeDossier; let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{dossier.id_unite_administrative.nom}}</td>
+                    <td>{{dossier.id_agent.nom}}</td>
+                    <td>{{dossier.ref_dossier}}</td>
+                    <td>{{dossier.intitule}}</td>
+                    <td>{{dossier.objet}}</td>
+                    <td>{{dossier.statut}}</td>
+                    <td>{{dossier.date_creation | date : 'd/M/Y'}}</td>
+                    <td>{{dossier.date_cloture | date : 'd/M/Y'}}</td>
+                    <td>
+                      <a ><i class="fa fa-eye"></i></a>
+                      <a routerLink="../detail/{{dossier._id}}"><i class="fa fa-edit text-success"></i></a>
+                      <a (click)="supprimerDossier(dossier._id, i)"><i class="fa fa-trash-alt text-danger"></i></a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->

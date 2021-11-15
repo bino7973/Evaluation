@@ -1,0 +1,46 @@
+<!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12 mx-auto">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><a class="btn btn-success" (click)="redirigerAjoutRole()">Ajouter un nouveau rôle</a></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>Numéro</th>
+                    <th>Nom</th>
+                    <th>Slug</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let role of listeRole; let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{role.nom}}</td>
+                    <td>{{role.slug}}</td>
+                    <td>
+                      <a href=""><i class="fa fa-eye"></i></a> &nbsp;
+                      <a routerLink="../detail/{{role._id}}"><i class="fa fa-edit text-success"></i></a> &nbsp;
+                      <a (click)="supprimerRole(role._id, i)"><i class="fa fa-trash-alt text-danger"></i></a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->

@@ -1,0 +1,33 @@
+
+  <div class="col-md-6 mx-auto">
+    <div class="card card-success">
+      <div class="card-header">
+        <h3 class="card-title">Enrégistrement d'une nouvelle nature</h3>
+      </div>
+      <!-- /.card-header -->
+      <!-- form start -->
+      <form [formGroup]="ajouterNatureFormGroup" (ngSubmit)="enregistrerNouvelleNature()">
+        <div class="card-body">
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="slug">Slug de la nature</label>
+              <input type="text" class="form-control" id="slug" placeholder="Entrer le slug de la nature" name="slug" formControlName="slug" required>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="nom">Nom de la nature</label>
+              <input type="text" class="form-control" id="nom" placeholder="Enter le nom de la nature" name="nom" formControlName="nom" required>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          <button type="submit" class="btn btn-success" [disabled]="ajouterNatureFormGroup.invalid">Enrégistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>

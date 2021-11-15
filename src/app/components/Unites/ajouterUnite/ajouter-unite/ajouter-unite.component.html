@@ -1,0 +1,49 @@
+
+<div class="col-md-12">
+  <div class="card card-success">
+    <div class="card-header">
+      <h3 class="card-title">Enrégistrement d'une nouvelle unité</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form [formGroup]="ajouterUniteFormGroup" (ngSubmit)="ajouterNouvelleUnite()">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="slug">Slug de l'unité</label>
+              <input type="text" class="form-control" id="slug" placeholder="Entrer le slug de l'unité administrative" name="slug" formControlName="slug" required>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="nom">Nom de l'unité</label>
+              <input type="text" class="form-control" id="nom" placeholder="Entrer le nom de l'unité administrative" name="nom" formControlName="nom" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="adresse">L'adresse de l'unité</label>
+              <input type="text" class="form-control" id="adresse" placeholder="Entrer l'adresse de l'unité administrative" name="adresse" formControlName="adresse" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="fonction">Fonction de l'unité administrative</label>
+              <input type="text" class="form-control" id="fonction" placeholder="Entrer la fonction de l'unité administrative" name="fonction" formControlName="fonction" required>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        <button type="submit" class="btn btn-success" [disabled]="ajouterUniteFormGroup.invalid">Enrégistrer</button>
+      </div>
+    </form>
+  </div>
+</div>

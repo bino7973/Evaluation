@@ -1,0 +1,109 @@
+
+<div class="col-12">
+  <div class="card card-success">
+    <div class="card-header">
+      <h3 class="card-title">Enrégistrement d'un nouveau dossier</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form [formGroup]="ajouterDossierFormGroup" (ngSubmit)="ajouterNouveauDossier()">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6"> <!-- row unite administrative-->
+            <div class="form-group">
+                  <label for="id_unite_administrative">Unité administrative</label>
+                  <select id="id_unite_administrative" class="form-control select2" style="width: 100%;" name="id_unite_administrative" formControlName="id_unite_administrative" required>
+                    <option value="" selected>Veuillez sélectionner une unité administrative</option>
+                    <option *ngFor="let unite of listeUnite" value="{{unite._id}}">{{unite.nom}}</option>
+                  </select>
+            </div>
+          </div>
+
+          <div class="col-md-6"> <!-- row id agent-->
+              <div class="form-group">
+                  <label for="id_agent">Agent responsable</label>
+                  <select id="id_agent" class="form-control select2" style="width: 100%;" name="id_agent" formControlName="id_agent" required>
+                    <option value="" selected>Veuillez sélectionner un agent responsable</option>
+                    <option *ngFor="let agent of listeAgent" value="{{agent._id}}}">{{agent.nom}}</option>
+                  </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="slug">Slug du dossier</label>
+                <input type="text" class="form-control" id="slug" placeholder="Entrer le slug du dossier" name="slug" formControlName="slug">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="ref_dossier">Référence du dossier</label>
+                <input type="text" class="form-control" id="ref_dossier" placeholder="Entrer la référence du dossier" name="ref_dossier" formControlName="ref_dossier">
+              </div>
+            </div>
+        </div>
+
+        <!--  row intitule statut     -->
+        <div class="row">
+          <div class="col-md-6">
+              <div class="form-group">
+                <label for="intitule">Intitule du dossier</label>
+                <input type="text" class="form-control" id="intitule" placeholder="Entrer l'intitule du dossier" name="intitule" formControlName="intitule" required>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="form-group">
+                  <label for="statut">Statut du dossier</label>
+                  <select id="statut" class="form-control select2" style="width: 100%;" name="statut" formControlName="statut" required>
+                    <option value="" selected>Veuillez sélectionner un dossier</option>
+                    <option value="ouvert">Ouvert</option>
+                    <option value="fermer">Fermer</option>
+                  </select>
+            </div>
+          </div>
+        </div>
+
+        <!--    row date_creation date_cloture    -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+                <label for="date_creation">Date de création</label>
+                <div class="input-group date">
+                    <input id="date_creation" type="date" class="form-control" name="date_creation" formControlName="date_creation" required/>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+                <label for="date_cloture">Date de clôture</label>
+                <div class="input-group date">
+                    <input id="date_cloture" type="date" class="form-control" name="date_cloture" formControlName="date_cloture" required/>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <!--        row objet dossier-->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="objet">Objet du dossier</label>
+              <textarea class="form-control" rows="3" placeholder="Entrer l'ojet du dossier" id="objet" name="objet" formControlName="objet"></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        <button type="submit" class="btn btn-success" [disabled]="ajouterDossierFormGroup.invalid">Enrégistrer</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+

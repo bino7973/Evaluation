@@ -1,0 +1,50 @@
+<!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12 mx-auto">
+            <div class="card" *ngIf="listeCourrierSupprimer != undefined; else elseBlock">
+              <div class="card-header">
+<!--                <h3 class="card-title"><a class="btn btn-success" (click)="redirigerAjoutRole()">Ajouter un nouveau rôle</a></h3>-->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>Numéro</th>
+                    <th>Responsable</th>
+                    <th>Motif de la suppression</th>
+                    <th>Date de la suppression</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let courrierSupprimer of listeCourrierSupprimer; let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{courrierSupprimer.id_agent.nom}}</td>
+                    <td>{{courrierSupprimer.motif_suppression}}</td>
+                    <td>{{courrierSupprimer.date_suppression | date : 'd/M/Y'}}</td>
+                    <td>
+                      <a href=""><i class="fa fa-edit text-success"></i></a>
+                      <a href=""><i class="fa fa-trash-alt text-danger"></i></a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <ng-template #elseBlock>
+              <div class="alert alert-danger" role="alert">
+                La liste des courriers supprimés est vide !
+              </div>
+            </ng-template>
+
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->

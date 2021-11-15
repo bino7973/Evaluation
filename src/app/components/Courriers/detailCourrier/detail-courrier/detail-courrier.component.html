@@ -1,0 +1,191 @@
+
+<div class="col-md-12">
+  <div class="card card-success">
+    <div class="card-header">
+      <h3 class="card-title">Modification du courrier</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form [formGroup]="updateCourrierFormGroup" (ngSubmit)="modifierCourrier()">
+      <div class="card-body">
+        <!--  row slug reference_courrier numero_reference_interne      -->
+        <div class="row">
+          <div class="col-md-4"><!-- champ du slug -->
+            <div class="form-group">
+              <label for="slug">Slug</label>
+              <input type="text" class="form-control" id="slug" placeholder="Entrer slug du courrier" name="slug" formControlName="slug" required>
+            </div>
+          </div>
+
+          <div class="col-md-4"><!-- champ de la référence -->
+            <div class="form-group">
+              <label for="ref_courrier">Référence du courrier</label>
+              <input type="text" class="form-control" id="ref_courrier" placeholder="Entrer la référence du courrier" name="ref_courrier" formControlName="ref_courrier" required>
+            </div>
+          </div>
+
+          <div class="col-md-4"><!-- champ de la référence -->
+            <div class="form-group">
+              <label for="num_reference_interne">Numéro de référence interne</label>
+              <input type="text" class="form-control" id="num_reference_interne" placeholder="Entrer le numéro de référence interne" name="num_ref_interne" formControlName="num_ref_interne" required>
+            </div>
+          </div>
+        </div>
+
+        <!--   row unite_administrative type nature     -->
+        <div class="row">
+          <div class="col-md-4"> <!-- row unite administrative -->
+              <div class="form-group">
+                  <label for="id_unite_administrative">Unité administrative</label>
+                  <select id="id_unite_administrative" class="form-control select2" style="width: 100%;" name="id_unite_administrative" formControlName="id_unite_administrative" required>
+                    <option value="" selected disabled>Veuillez selectionner une unité administrative</option>
+                    <option *ngFor="let unite of listeUnite" value="{{unite._id}}">{{unite.nom}}</option>
+                  </select>
+                </div>
+          </div>
+          <div class="col-md-4"> <!-- row type -->
+            <div class="form-group">
+                  <label for="id_type">Type</label>
+                  <select id="id_type" class="form-control select2" style="width: 100%;" name="id_type" formControlName="id_type" required>
+                    <option value="" selected disabled>Veuillez selectionner un type</option>
+                    <option *ngFor="let type of listeType" value="{{type._id}}">{{type.nom}}</option>
+                  </select>
+                </div>
+          </div>
+          <div class="col-md-4"> <!-- row nature -->
+            <div class="form-group">
+                  <label for="id_nature">Nature</label>
+                  <select id="id_nature" class="form-control select2" style="width: 100%;" name="id_nature" formControlName="id_nature" required>
+                    <option value="" selected disabled>Veuillez sélectionner une nature</option>
+                    <option *ngFor="let nature of listeNature" value="{{nature._id}}">{{nature.nom}}</option>
+                  </select>
+                </div>
+          </div>
+        </div>
+
+        <!--   row contact dossier suiveur     -->
+        <div class="row">
+          <div class="col-md-4"> <!-- row contact -->
+              <div class="form-group">
+                  <label for="id_contact">Contact</label>
+                  <select id="id_contact" class="form-control select2" style="width: 100%;" name="id_contact" formControlName="id_contact" required>
+                    <option value="" selected disabled>Veuillez selectionner un contact</option>
+                    <option *ngFor="let contact of listeContact" value="{{contact._id}}">{{contact.nom}}</option>
+                  </select>
+                </div>
+          </div>
+          <div class="col-md-4"> <!-- row responsable -->
+            <div class="form-group" >
+                  <label>Responsable</label>
+                  <select class="form-control select2" style="width: 100%;" name="id_responsable" formControlName="id_responsable" required>
+                    <option value="" selected disabled>Veuillez selectionner un responsable</option>
+                    <option *ngFor="let agent of listeAgent" value="{{agent._id}}">{{agent.nom}}</option>
+                  </select>
+                </div>
+          </div>
+          <div class="col-md-4"> <!-- row suiveur -->
+            <div class="form-group">
+                  <label>Suiveur</label>
+                  <select class="form-control select2" style="width: 100%;" name="id_suiveur" formControlName="id_suiveur" required>
+                    <option value="" selected disabled>Veuillez selectionner un suiveur</option>
+                    <option *ngFor="let agent of listeAgent" value="{{agent._id}}">{{agent.nom}}</option>
+                  </select>
+                </div>
+          </div>
+
+        </div>
+
+        <!--  row date_courrier date_arrivee date_creation      -->
+        <div class="row">
+          <div class="col-md-4"> <!-- row date courrier -->
+            <div class="form-group">
+                  <label id="date_courrier">Date du courrier</label>
+                    <div class="input-group date" data-target-input="nearest">
+                        <input type="date" class="form-control datetimepicker-input" data-target="#reservationdate" name="date_courrier" formControlName="date_courrier" required />
+                    </div>
+            </div>
+          </div>
+          <div class="col-md-4"> <!-- row date creation -->
+            <div class="form-group">
+                  <label id="date_creation">Date de création</label>
+                    <div class="input-group date" data-target-input="nearest">
+                        <input type="date" class="form-control datetimepicker-input" data-target="#reservationdate" for="date_creation" name="date_creation" formControlName="date_creation" required/>
+                    </div>
+                </div>
+          </div>
+          <div class="col-md-4"> <!-- row date d'arrivée -->
+            <div class="form-group">
+                  <label id="date_arrive">Date d'arrivée</label>
+                    <div class="input-group date"  data-target-input="nearest">
+                        <input type="date" class="form-control datetimepicker-input" data-target="#reservationdate" for="date_arrive" name="date_arrive" formControlName="date_arrive"/>
+
+                    </div>
+                </div>
+          </div>
+        </div>
+
+        <!--  row devise montant statut -->
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="devise">Dévise</label>
+              <input type="text" class="form-control" id="devise" placeholder="Entrer le dévise" name="devise" formControlName="devise">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="montant">Montant</label>
+              <input type="text" class="form-control" id="montant" placeholder="Entrer le montant" name="montant" formControlName="montant">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+                  <label>Statut</label>
+                  <select class="form-control select2" style="width: 100%;" name="statut" formControlName="statut">
+                    <option value="" selected disabled>Veuillez selectionner un statut</option>
+                    <option value="ouvert">Ouvert</option>
+                    <option value="fermer">Fermer</option>
+                  </select>
+                </div>
+          </div>
+        </div>
+
+        <!--    row Objet commentaire  dossier -->
+        <div class="row">
+          <div class="col-md-4"> <!-- row objet -->
+            <div class="form-group">
+              <label id="objet">Objet du courrier</label>
+              <textarea class="form-control" rows="3" placeholder="Entrer l'ojet du courrrier" for="objet" name="objet" formControlName="objet"></textarea>
+            </div>
+          </div>
+
+          <div class="col-md-4"> <!-- row commentaire -->
+            <div class="form-group">
+              <label>Commentaire</label>
+              <textarea class="form-control" rows="3" placeholder="Entrer des commentaires au courrier" name="commentaire" formControlName="commentaire"></textarea>
+            </div>
+          </div>
+
+          <div class="col-md-4"> <!-- row dossier -->
+            <div class="form-group">
+                  <label id="id_dossier">Dossier</label>
+                  <select class="form-control select2" style="width: 100%;" for="id_dossier" name="id_dossier" formControlName="id_dossier">
+                    <option value="" selected disabled>Veuillez selectionner un dossier</option>
+                    <option *ngFor="let dossier of listeDossier; let i = index" value="{{dossier._id}}">{{dossier.intitule}}</option>
+                  </select>
+                </div>
+          </div>
+
+
+        </div>
+
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        <button type="submit" class="btn btn-success" [disabled]="updateCourrierFormGroup.invalid">Enrégistrer</button>
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      </div>
+    </form>
+  </div>
+</div>
+

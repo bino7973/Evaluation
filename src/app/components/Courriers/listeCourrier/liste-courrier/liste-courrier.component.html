@@ -1,0 +1,74 @@
+<!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12 mx-auto">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><a class="btn btn-success" (click)="redirigerAjoutCourrier()">Ajouter un nouveau courrier</a></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>Référence courrier</th>
+                    <th>Unité administrative</th>
+                    <th>Type</th>
+                    <th>Nature</th>
+                    <th>Contact</th>
+                    <th>Dossier</th>
+                    <th>Responsable</th>
+                    <th>Objet</th>
+                    <th>Date création</th>
+                    <th>Date d'arrivée</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let courrier of listCourrier; let i= index">
+                    <td>{{courrier.ref_courrier}}</td>
+                    <td>
+                      <span *ngIf="courrier.id_unite_administrative">
+                        {{courrier.id_unite_administrative.nom}}
+                      </span>
+                    </td>
+                    <td>
+                      <span *ngIf="courrier.id_type">{{courrier.id_type.nom}}</span>
+                    </td>
+                    <td>
+                      <span *ngIf="courrier.id_nature">{{courrier.id_nature.nom}}</span>
+                    </td>
+                    <td>
+                      <span *ngIf="courrier.id_contact">{{courrier.id_contact.nom}}</span>
+                    </td>
+                    <td>
+                      <span *ngIf="courrier.id_dossier">{{courrier.id_dossier.intitule}}</span>
+                    </td>
+                    <td *ngIf="courrier.id_responsable">
+                      <span>{{courrier.id_responsable.nom}}</span>
+                    </td>
+                    <td>{{courrier.objet}}</td>
+                    <td>{{courrier.date_creation | date : ' d/M/Y'}}</td>
+                    <td>{{courrier.date_arrive | date : ' d/M/Y'}}</td>
+                    <td>
+                      <a href=""><i class="fa fa-eye"></i></a>
+                      <a routerLink="../detail/{{courrier._id}}"><i class="fa fa-edit text-success"></i></a>
+                      <a (click)="supprimerCourrier(courrier._id, i)"><i class="fa fa-trash-alt text-danger"></i></a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->

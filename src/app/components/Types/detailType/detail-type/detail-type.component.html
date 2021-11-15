@@ -1,0 +1,32 @@
+
+<div class="col-md-6 mx-auto">
+  <div class="card card-success">
+    <div class="card-header">
+      <h3 class="card-title">Enrégistrement d'un nouveau type</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form [formGroup]="updateTypeFormGroup" (ngSubmit)="modifierType()">
+      <div class="card-body">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="slug">Entrer le slug du type</label>
+            <input type="text" class="form-control" id="slug" placeholder="Entrer le slug du type" name="slug" formControlName="slug" required>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="nom">Entrer le nom du type</label>
+            <input type="text" class="form-control" id="nom" placeholder="Entrer le nom du type" name="nom" formControlName="nom" required>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        <button type="submit" class="btn btn-success" [disabled]="updateTypeFormGroup.invalid">Modifier</button>
+      </div>
+    </form>
+  </div>
+</div>
