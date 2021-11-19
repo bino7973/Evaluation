@@ -42,7 +42,9 @@
       </div>
       <!-- /.card-body -->
       <div class="card-footer">
-        <button type="submit" class="btn btn-success" [disabled]="modifierUniteFormGroup.invalid">Modifier</button>
+        <button type="submit" class="btn btn-success" [disabled]="modifierUniteFormGroup.invalid">
+          Modifier <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        </button>
       </div>
     </form>
   </div>

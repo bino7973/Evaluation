@@ -5,6 +5,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {DatePipe} from "@angular/common";
 import {AgentService} from "../../../../services/Agents/agent.service";
 import {UniteService} from "../../../../services/Unite/unite.service";
+import {DossierModel} from "../../../../models/dossier-model.model";
+import {AlertService} from "../../../../services/Alerts/alert.service";
 
 @Component({
   selector: 'app-detail-dossier',
@@ -19,11 +21,15 @@ export class DetailDossierComponent implements OnInit {
   listeAgent : any;
   listeUnite : any;
 
-  constructor(private formBuilder : FormBuilder,private dossierService : DossierService, private activatedRoute : ActivatedRoute, private router : Router, private datePipe : DatePipe, private agentService : AgentService, private uniteService : UniteService) {
+  loading = false;
+  submitted = false;
+
+  constructor(private formBuilder : FormBuilder,private dossierService : DossierService, private activatedRoute : ActivatedRoute, private router : Router, private datePipe : DatePipe, private agentService : AgentService, private uniteService : UniteService, private alertService : AlertService) {
     this.idDossierSelectionner = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
+    this.initForm()
   }
 
   initForm(){
@@ -65,11 +71,32 @@ export class DetailDossierComponent implements OnInit {
         statut : dossier.statut
       })
     }, (erreur)=>{
-      console.log(erreur)
+      this.alertService.emettreAlert("Obtention de dossier","Le dossier choisit n'a pas puis être obtenu!", 'error')
     })
   }
 
   modifierDossier() {
+    this.submitted = true
+    if(this.modifierDossierFormGroup.invalid){
+      return
+    }
+    this.loading = true
+    let slug = this.modifierDossierFormGroup.value.slug;
+    let ref_dossier = this.modifierDossierFormGroup.value.ref_dossier;
+    let intitule = this.modifierDossierFormGroup.value.intitule;
+    let objet = this.modifierDossierFormGroup.value.objet;
+    let id_unite_administrative = this.modifierDossierFormGroup.value.id_unite_administrative;
+    let id_agent = this.modifierDossierFormGroup.value.id_agent;
+    let date_creation = this.modifierDossierFormGroup.value.date_creation;
+    let date_cloture = this.modifierDossierFormGroup.value.date_cloture;
+    let statut = this.modifierDossierFormGroup.value.statut;
+    let dossierModifier = new DossierModel(slug,ref_dossier, intitule, objet, id_unite_administrative, id_agent, date_creation, date_cloture, statut);
+    this.dossierService.updateDossierFromServer(dossierModifier, this.idDossierSelectionner).subscribe((resultat)=>{
+      this.router.navigate(['/home', 'dossier', 'liste'])
+      this.alertService.emettreUnToast("Modification du dossier effectuée avec succès !", 'success');
+    }, (erreur)=>{
+      this.alertService.emettreUnToast("Echec de la modification du dossier !", 'error');
+    })
 
   }
 }

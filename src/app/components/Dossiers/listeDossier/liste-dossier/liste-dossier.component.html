@@ -27,8 +27,16 @@
                   <tbody>
                   <tr *ngFor="let dossier of listeDossier; let i = index">
                     <td>{{i+1}}</td>
-                    <td>{{dossier.id_unite_administrative.nom}}</td>
-                    <td>{{dossier.id_agent.nom}}</td>
+                    <td>
+                      <span *ngIf="dossier.id_unite_administrative">
+                        {{dossier.id_unite_administrative.nom}}
+                      </span>
+                    </td>
+                    <td>
+                      <span *ngIf="dossier.id_agent">
+                        {{dossier.id_agent.nom}}
+                      </span>
+                    </td>
                     <td>{{dossier.ref_dossier}}</td>
                     <td>{{dossier.intitule}}</td>
                     <td>{{dossier.objet}}</td>
@@ -36,8 +44,8 @@
                     <td>{{dossier.date_creation | date : 'd/M/Y'}}</td>
                     <td>{{dossier.date_cloture | date : 'd/M/Y'}}</td>
                     <td>
-                      <a ><i class="fa fa-eye"></i></a>
-                      <a routerLink="../detail/{{dossier._id}}"><i class="fa fa-edit text-success"></i></a>
+                      <a ><i class="fa fa-eye"></i></a> &nbsp;
+                      <a routerLink="../detail/{{dossier._id}}"><i class="fa fa-edit text-success"></i></a> &nbsp;
                       <a (click)="supprimerDossier(dossier._id, i)"><i class="fa fa-trash-alt text-danger"></i></a>
                     </td>
                   </tr>

@@ -45,6 +45,7 @@ import { DetailTypeComponent } from './components/Types/detailType/detail-type/d
 import {DetailUniteComponent} from "./components/Unites/detailUnite/detail-unite/detail-unite.component";
 import { DetailContactComponent } from './components/Contacts/detailContact/detail-contact/detail-contact.component';
 import { DetailDossierComponent } from './components/Dossiers/detailDossier/detail-dossier/detail-dossier.component';
+import { EssaiComponent } from './essai/essai.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { DetailDossierComponent } from './components/Dossiers/detailDossier/deta
     DetailTypeComponent,
     DetailUniteComponent,
     DetailContactComponent,
-    DetailDossierComponent
+    DetailDossierComponent,
+    EssaiComponent
   ],
     imports: [
         BrowserModule,

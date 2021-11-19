@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UniteService} from "../../../../services/Unite/unite.service";
 import {UniteModel} from "../../../../models/unite-model.model";
+import {AlertService} from "../../../../services/Alerts/alert.service";
 
 @Component({
   selector: 'app-detail-unite',
@@ -13,8 +14,10 @@ export class DetailUniteComponent implements OnInit {
 
   modifierUniteFormGroup !: FormGroup;
   idUniteSelected : any
+  loading = false;
+  submitted = false;
 
-  constructor(private formBuilder : FormBuilder, private activatedRoute : ActivatedRoute, private uniteService : UniteService, private router : Router) {
+  constructor(private formBuilder : FormBuilder, private activatedRoute : ActivatedRoute, private uniteService : UniteService, private router : Router, private alertService : AlertService) {
     this.idUniteSelected = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
@@ -45,6 +48,11 @@ export class DetailUniteComponent implements OnInit {
   }
 
   modifierUnite(){
+    this.submitted = true
+    if(this.modifierUniteFormGroup.invalid){
+      return
+    }
+    this.loading = true
     let slug= this.modifierUniteFormGroup.value.slug
     let nom= this.modifierUniteFormGroup.value.nom
     let adresse = this.modifierUniteFormGroup.value.adresse
@@ -52,8 +60,9 @@ export class DetailUniteComponent implements OnInit {
     let uniteModifier = new UniteModel(slug, nom, adresse, fonction);
     this.uniteService.updateUniteFromServer(uniteModifier, this.idUniteSelected).subscribe((resultat)=>{
       this.router.navigate(['/home', 'unite','liste']);
+      this.alertService.emettreUnToast("Modification de l'unité effectuée avec succès !", 'success');
     }, (erreur)=>{
-      console.log(erreur)
+      this.alertService.emettreUnToast("Echec de la modification d'unité !", 'error');
     })
   }
 

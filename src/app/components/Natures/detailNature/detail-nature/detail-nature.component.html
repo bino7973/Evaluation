@@ -2,7 +2,7 @@
   <div class="col-md-6 mx-auto">
     <div class="card card-success">
       <div class="card-header">
-        <h3 class="card-title">Modification d'une nature</h3>
+        <h3 class="card-title">Modification de nature</h3>
       </div>
       <!-- /.card-header -->
       <!-- form start -->
@@ -26,7 +26,9 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-          <button type="submit" class="btn btn-success" [disabled]="updateNatureFormGroup.invalid">Modifier</button>
+          <button type="submit" class="btn btn-success" [disabled]="updateNatureFormGroup.invalid">
+            Modifier <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          </button>
         </div>
       </form>
     </div>

@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {RoleService} from "../../../../services/Roles/role.service";
 import {RoleModel} from "../../../../models/role-model.model";
 import {Router} from "@angular/router";
+import {AlertService} from "../../../../services/Alerts/alert.service";
 
 
 @Component({
@@ -13,8 +14,10 @@ import {Router} from "@angular/router";
 export class AjouterRoleComponent implements OnInit {
 
   ajouterRoleFormGroup !: FormGroup;
+  loading = false;
+  submitted = false;
 
-  constructor(private formBuilder : FormBuilder, private roleService : RoleService, private router : Router) { }
+  constructor(private formBuilder : FormBuilder, private roleService : RoleService, private router : Router, private alertService : AlertService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -28,13 +31,19 @@ export class AjouterRoleComponent implements OnInit {
   }
 
   ajouterNouveauRole() {
+    this.submitted = true
+    if(this.ajouterRoleFormGroup.invalid){
+      return
+    }
+    this.loading = true
     let slug = this.ajouterRoleFormGroup.value.slug
     let nom = this.ajouterRoleFormGroup.value.nom
     let role = new RoleModel(slug, nom);
     this.roleService.addNewRoleToServer(role).subscribe((resultat)=>{
       this.router.navigate(['/home','role','liste']);
+      this.alertService.emettreUnToast("Enrégistrement d'un nouveau rôle effectué avec succès !", 'success');
     }, (erreur)=>{
-      console.log(erreur)
+      this.alertService.emettreUnToast("Echec d'enrégistrement d'u nouveau rôle !", 'error');
     })
   }
 }

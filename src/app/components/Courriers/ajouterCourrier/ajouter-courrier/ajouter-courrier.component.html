@@ -184,8 +184,10 @@
       </div>
       <!-- /.card-body -->
       <div class="card-footer">
-        <button type="submit" class="btn btn-success" [disabled]="ajoutCourrierFormGroup.invalid">Enrégistrer</button>
-        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        <button type="submit" class="btn btn-success" [disabled]="ajoutCourrierFormGroup.invalid">
+          Enrégistrer <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        </button>
+
       </div>
 
 

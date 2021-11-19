@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NatureService} from "../../../../services/Natures/nature.service";
 import {NatureModel} from "../../../../models/nature-model.model";
+import {AlertService} from "../../../../services/Alerts/alert.service";
 
 @Component({
   selector: 'app-detail-nature',
@@ -13,8 +14,10 @@ export class DetailNatureComponent implements OnInit {
 
   updateNatureFormGroup !: FormGroup;
   idNatureSelected : any;
+  loading = false;
+  submitted = false;
 
-  constructor(private router : Router,private formBuilder : FormBuilder, private routerActivated : ActivatedRoute, private natureService : NatureService) { }
+  constructor(private router : Router,private formBuilder : FormBuilder, private routerActivated : ActivatedRoute, private natureService : NatureService, private alertService : AlertService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -36,13 +39,19 @@ export class DetailNatureComponent implements OnInit {
   }
 
   modificationNature() {
+    this.submitted = true
+    if (this.updateNatureFormGroup.invalid){
+      return
+    }
+    this.loading = true
     let slug = this.updateNatureFormGroup.value.slug
     let nom = this.updateNatureFormGroup.value.nom
     let natureModifier = new NatureModel(slug, nom)
     this.natureService.updateNatureFromServer(natureModifier, this.idNatureSelected).subscribe((resultat)=>{
       this.router.navigate(['/home','nature','liste'])
+      this.alertService.emettreUnToast("Modification de la nature effectuée avec succès !", 'succèss')
     }, (erreur)=>{
-      console.log(erreur)
+      this.alertService.emettreUnToast("Echec de la modification de la nature !", 'error')
     })
   }
 }

@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {AlertService} from "../../../services/Alerts/alert.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-alert',
@@ -18,6 +19,28 @@ export class AlertComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
+  }
+
+  makeAlert(titre : string, message : string, typeIcon : string){
+    if(typeIcon == 'success'){
+      Swal.fire(
+        titre,
+        message,
+        'success'
+      )
+    }else{
+      Swal.fire(
+        titre,
+        message,
+        'error'
+      )
+    }
+
+
+  }
+
+  makeErrorAlert(titre : string, ) : boolean{
+    return true;
   }
 
 }

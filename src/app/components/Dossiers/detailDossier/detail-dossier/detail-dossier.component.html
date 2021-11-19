@@ -2,7 +2,7 @@
 <div class="col-12">
   <div class="card card-success">
     <div class="card-header">
-      <h3 class="card-title">Enrégistrement d'un nouveau dossier</h3>
+      <h3 class="card-title">Modification de dossier</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
@@ -100,7 +100,9 @@
       </div>
       <!-- /.card-body -->
       <div class="card-footer">
-        <button type="submit" class="btn btn-success" [disabled]="modifierDossierFormGroup.invalid">Enrégistrer</button>
+        <button type="submit" class="btn btn-success" [disabled]="modifierDossierFormGroup.invalid">
+          Modifier <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        </button>
       </div>
     </form>
   </div>

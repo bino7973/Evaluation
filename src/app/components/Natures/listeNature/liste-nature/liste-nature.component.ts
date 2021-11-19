@@ -9,7 +9,9 @@ import Swal from "sweetalert2";
   styleUrls: ['./liste-nature.component.sass']
 })
 export class ListeNatureComponent implements OnInit {
+
   listeNature : any = [];
+
   constructor(private natureService : NatureService, private router : Router) { }
 
   ngOnInit(): void {

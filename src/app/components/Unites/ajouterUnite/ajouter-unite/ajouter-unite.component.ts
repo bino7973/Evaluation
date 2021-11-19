@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UniteModel} from "../../../../models/unite-model.model";
 import {UniteService} from "../../../../services/Unite/unite.service";
 import {Router} from "@angular/router";
+import {AlertService} from "../../../../services/Alerts/alert.service";
 
 @Component({
   selector: 'app-ajouter-unite',
@@ -12,8 +13,10 @@ import {Router} from "@angular/router";
 export class AjouterUniteComponent implements OnInit {
 
   ajouterUniteFormGroup !: FormGroup;
+  loading = false;
+  submitted = false;
 
-  constructor(private formBuilder : FormBuilder, private uniteService : UniteService, private router : Router) { }
+  constructor(private formBuilder : FormBuilder, private uniteService : UniteService, private router : Router, private alertService : AlertService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -29,6 +32,11 @@ export class AjouterUniteComponent implements OnInit {
   }
 
   ajouterNouvelleUnite() {
+    this.submitted = true
+    if(this.ajouterUniteFormGroup.invalid){
+      return
+    }
+    this.loading = true
     let slug= this.ajouterUniteFormGroup.value.slug
     let nom= this.ajouterUniteFormGroup.value.nom
     let adresse= this.ajouterUniteFormGroup.value.adresse
@@ -36,8 +44,9 @@ export class AjouterUniteComponent implements OnInit {
     let nouvelleUnite = new UniteModel(slug, nom, adresse, fonction);
     this.uniteService.addNewUniteToServer(nouvelleUnite).subscribe((resultat)=>{
       this.router.navigate(['/home', 'unite', 'liste']);
+      this.alertService.emettreUnToast("Enregistrement d'une unité administrative effectué avec succès !", 'success');
     }, (erreur)=>{
-      console.log(erreur)
+      this.alertService.emettreUnToast("Echec d'enregistrement de l'unité administrative !", 'error');
     })
   }
 }

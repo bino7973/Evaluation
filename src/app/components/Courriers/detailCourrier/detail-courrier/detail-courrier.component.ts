@@ -9,6 +9,8 @@ import {ContactService} from "../../../../services/Contacts/contact.service";
 import {AgentService} from "../../../../services/Agents/agent.service";
 import {DossierService} from "../../../../services/Dossiers/dossier.service";
 import {DatePipe} from "@angular/common";
+import {CourrierModel} from "../../../../models/courrier-model.model";
+import {AlertService} from "../../../../services/Alerts/alert.service";
 
 @Component({
   selector: 'app-detail-courrier',
@@ -30,7 +32,9 @@ export class DetailCourrierComponent implements OnInit {
   listeAgent : any;
   listeDossier : any;
 
-  constructor(private datePipe : DatePipe, private formBuilder : FormBuilder, private router : Router, private activatedRoute : ActivatedRoute, private courrierService : CourrierService, private uniteService : UniteService, private typeService : TypeService, private natureService : NatureService, private contactService : ContactService, private agentService : AgentService, private dossierService : DossierService) {
+  constructor(private datePipe : DatePipe, private formBuilder : FormBuilder, private router : Router, private activatedRoute : ActivatedRoute, private courrierService : CourrierService, private uniteService : UniteService,
+              private typeService : TypeService, private natureService : NatureService, private contactService : ContactService, private agentService : AgentService, private dossierService : DossierService,
+              private alertService : AlertService) {
     this.idCourrier = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
@@ -131,7 +135,42 @@ export class DetailCourrierComponent implements OnInit {
   }
 
   modifierCourrier(){
-    console.log(this.updateCourrierFormGroup.value)
+    this.submitted = true
+    if (this.updateCourrierFormGroup.invalid){
+      return
+    }
+    this.loading = true
+    let slug = this.updateCourrierFormGroup.value.slug
+    let ref_courrier = this.updateCourrierFormGroup.value.ref_courrier
+    let id_unite_administrative = this.updateCourrierFormGroup.value.id_unite_administrative
+    let id_type = this.updateCourrierFormGroup.value.id_type
+    let id_nature = this.updateCourrierFormGroup.value.id_nature
+    let id_contact = this.updateCourrierFormGroup.value.id_contact
+    let id_dossier = this.updateCourrierFormGroup.value.id_dossier
+    let id_suiveur = this.updateCourrierFormGroup.value.id_suiveur
+    let id_responsable = this.updateCourrierFormGroup.value.id_responsable
+    let num_ref_interne = this.updateCourrierFormGroup.value.num_ref_interne
+    let date_courrier = this.updateCourrierFormGroup.value.date_courrier
+    let date_arrive = this.updateCourrierFormGroup.value.date_arrive
+    let date_creation = this.updateCourrierFormGroup.value.date_creation
+    let demande = this.updateCourrierFormGroup.value.demande
+    let objet = this.updateCourrierFormGroup.value.objet
+    let commentaire = this.updateCourrierFormGroup.value.commentaire
+    let devise = this.updateCourrierFormGroup.value.devise
+    let montant = this.updateCourrierFormGroup.value.montant
+    let statut = this.updateCourrierFormGroup.value.statut
+
+    let courrierModifier = new CourrierModel(slug, ref_courrier, id_unite_administrative, id_type, id_nature, id_contact,
+      id_dossier, id_suiveur, id_responsable, num_ref_interne, date_courrier,
+      date_arrive, date_creation, demande, objet, commentaire, devise, montant, statut);
+
+    this.courrierService.updateCourrierFromServer(courrierModifier, this.idCourrier).subscribe((resultat)=>{
+      this.router.navigate(['/home', 'courrier', 'liste']);
+      this.alertService.emettreUnToast("Courrier modifié avec succès ! ", 'success');
+    }, (erreur)=>{
+      this.alertService.emettreUnToast("Echec de la modification du courrier !", 'error');
+    })
+
   }
 
 }

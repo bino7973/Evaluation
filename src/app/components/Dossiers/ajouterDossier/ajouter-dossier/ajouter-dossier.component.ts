@@ -5,6 +5,7 @@ import {AgentService} from "../../../../services/Agents/agent.service";
 import {UniteService} from "../../../../services/Unite/unite.service";
 import {DossierModel} from "../../../../models/dossier-model.model";
 import {Router} from "@angular/router";
+import {AlertService} from "../../../../services/Alerts/alert.service";
 
 @Component({
   selector: 'app-ajouter-dossier',
@@ -18,7 +19,10 @@ export class AjouterDossierComponent implements OnInit {
   listeAgent : any;
   listeUnite : any;
 
-  constructor(private formBuilder : FormBuilder, private agentService : AgentService, private uniteService : UniteService, private dossierService : DossierService, private router : Router) { }
+  loading = false;
+  submitted = false;
+
+  constructor(private formBuilder : FormBuilder, private agentService : AgentService, private uniteService : UniteService, private dossierService : DossierService, private router : Router, private alertService : AlertService) { }
 
   ngOnInit(): void {
     this.initForm()
@@ -38,7 +42,6 @@ export class AjouterDossierComponent implements OnInit {
     })
 
 
-
     this.agentService.getAllAgentFromServer().subscribe((resultat)=>{
       this.listeAgent = resultat.agents
     }, (erreur)=>{
@@ -53,6 +56,10 @@ export class AjouterDossierComponent implements OnInit {
   }
 
   ajouterNouveauDossier() {
+    this.submitted = true
+    if(this.ajouterDossierFormGroup.invalid){
+      return
+    }
     let slug = this.ajouterDossierFormGroup.value.slug;
     let ref_dossier = this.ajouterDossierFormGroup.value.ref_dossier;
     let intitule = this.ajouterDossierFormGroup.value.intitule;
@@ -64,11 +71,12 @@ export class AjouterDossierComponent implements OnInit {
     let statut = this.ajouterDossierFormGroup.value.statut;
 
     let nouveauDossier = new DossierModel(slug, ref_dossier, intitule, objet, id_unite_administrative, id_agent, date_creation, date_cloture, statut);
-    //console.log(nouveauDossier)
+
     this.dossierService.addNewDossierToServer(nouveauDossier).subscribe((resultat)=>{
       this.router.navigate(['/home','dossier', 'liste'])
+      this.alertService.emettreUnToast("Enrégistrement d'un nouveau dossier effectué avec succès !", 'success');
     }, (erreur)=>{
-      console.log(erreur)
+      this.alertService.emettreUnToast("Echec d'enrégistrement d'un nouveau dossier !", 'error');
     })
   }
 }

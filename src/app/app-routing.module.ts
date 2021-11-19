@@ -42,6 +42,9 @@ const routes: Routes = [
       {path : 'courrier/liste', component : ListeCourrierComponent},
       {path : 'courrier/detail/:id', component : DetailCourrierComponent},
 
+      //Courriers arrivées
+      //{path : 'courrier/'}
+
       //Agents
       {path : 'agent/ajouter', component : SignInComponent},
       {path : 'agent/liste', component : ListComponent},

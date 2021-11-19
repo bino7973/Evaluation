@@ -31,6 +31,11 @@ export class CourrierService {
   getOneCourrierFromServer(id : any) : Observable<any>{
     let get_url = `${this.API_URL_BASE}/${id}`;
     return this.httpClient.get(get_url, {headers : this.httpHeaders});
+  }
 
+  //Update courriers from server
+  updateCourrierFromServer(courrierModifier : CourrierModel, id : string) : Observable<any>{
+    let get_url = `${this.API_URL_BASE}/${id}`;
+    return this.httpClient.patch(get_url, courrierModifier, {headers : this.httpHeaders});
   }
 }

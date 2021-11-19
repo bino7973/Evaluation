@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NatureService} from "../../../../services/Natures/nature.service";
 import {Router} from "@angular/router";
 import {NatureModel} from "../../../../models/nature-model.model";
+import {AlertService} from "../../../../services/Alerts/alert.service";
 
 @Component({
   selector: 'app-ajouter-nature',
@@ -12,8 +13,10 @@ import {NatureModel} from "../../../../models/nature-model.model";
 export class AjouterNatureComponent implements OnInit {
 
   ajouterNatureFormGroup !: FormGroup;
+  loading = false;
+  submitted = false;
 
-  constructor(private formBuilder : FormBuilder, private natureService : NatureService, private router : Router) { }
+  constructor(private formBuilder : FormBuilder, private natureService : NatureService, private router : Router, private alertService : AlertService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -27,13 +30,19 @@ export class AjouterNatureComponent implements OnInit {
   }
 
   enregistrerNouvelleNature() {
+    this.submitted = true
+    if(this.ajouterNatureFormGroup.invalid){
+      return
+    }
+    this.loading = true
     let slug = this.ajouterNatureFormGroup.value.slug
     let nom = this.ajouterNatureFormGroup.value.nom
     let nouveauNature = new NatureModel(slug, nom);
     this.natureService.addNewNatureToServer(nouveauNature).subscribe((resultat)=>{
       this.router.navigate(['/home', 'nature', 'liste']);
+      this.alertService.emettreUnToast("Enrégistrement da la nouvelle nature effectuée avec succès !", 'success');
     }, (erreur)=>{
-      console.log(erreur)
+      this.alertService.emettreUnToast("Echec d'enrégistrement da la nouvelle nature !", 'error');
     })
   }
 }

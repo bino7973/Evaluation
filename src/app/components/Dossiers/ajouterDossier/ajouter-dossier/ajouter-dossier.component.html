@@ -2,7 +2,7 @@
 <div class="col-12">
   <div class="card card-success">
     <div class="card-header">
-      <h3 class="card-title">Enrégistrement d'un nouveau dossier</h3>
+      <h3 class="card-title">Enrégistrement de nouveau dossier</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
@@ -24,7 +24,7 @@
                   <label for="id_agent">Agent responsable</label>
                   <select id="id_agent" class="form-control select2" style="width: 100%;" name="id_agent" formControlName="id_agent" required>
                     <option value="" selected>Veuillez sélectionner un agent responsable</option>
-                    <option *ngFor="let agent of listeAgent" value="{{agent._id}}}">{{agent.nom}}</option>
+                    <option *ngFor="let agent of listeAgent" value="{{agent._id}}">{{agent.nom}}</option>
                   </select>
             </div>
           </div>
@@ -100,7 +100,9 @@
       </div>
       <!-- /.card-body -->
       <div class="card-footer">
-        <button type="submit" class="btn btn-success" [disabled]="ajouterDossierFormGroup.invalid">Enrégistrer</button>
+        <button type="submit" class="btn btn-success" [disabled]="ajouterDossierFormGroup.invalid">
+          Enrégistrer <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        </button>
       </div>
     </form>
   </div>
